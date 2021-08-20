@@ -40,6 +40,8 @@ local EventResultPositive = {
 
     DirectlyGrabOtherPop = 15,
     DirectlyGrabOtherPopSlightly = 16,
+
+    AddGodPopulation = 17, -- OutSpread_God1
 };
 
 -- Based on methods from Scripts/MapStory/MapStory.lua
@@ -242,8 +244,14 @@ function CityEventHelper:EvaluateEventCode(eventResultCode, region, decision)
                     UnionData = region.UnionData,
                     RegionPolicy = {
                         Way = SolveWayEnumMapping[decision] -- We're passing our decision here
+                    },
+                    GetNotSelfRegionSchool = function() return region:GetNotSelfRegionSchool(); end,
+                    GetReligion = function(idx) return region:GetReligion(idx);  end,
+                    FaithNpc = {
+                        LuaHelper = MockStoryHelper,
                     }
-                }
+                },
+                schools = region.RegionPolicy.Schools,
             }
         },
         GameMain = {
